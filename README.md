@@ -1,2 +1,2 @@
-# tools
+# Tools Collection
 A collection of useful tools
