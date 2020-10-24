@@ -1,11 +1,14 @@
 // ==UserScript==
 // @name         Address List BGP
 // @namespace    https://laksa19.github.io/addrlistbgp
-// @version      0.3
+// @updateURL    https://raw.githubusercontent.com/laksa19/addrlistbgp/main/addrlistbgp.user.js
+// @downloadURL  https://raw.githubusercontent.com/laksa19/addrlistbgp/main/addrlistbgp.user.js
+// @version      0.7
 // @description  Get Adress List from BGP
 // @author       Laksamadi Guko
 // @match        https://bgp.he.net/search*
 // @match        https://bgp.he.net/dns/*
+// @match        https://bgp.he.net/AS*
 // @grant        none
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
@@ -75,9 +78,15 @@ margin-bottom:8px;
         });
 
         tr.each(function() {
+            var list ="";
             var ip = ($(this).find('a').html());
+            if(location.href.split("/")[3].substr(0,2) == "AS"){
+                list = $('#header').find('a')[2].innerHTML;
+            }else{
+                list = $('#search_search').val();
+            }
             if(ip && ip.split(".").length == 4){
-                $("#tblresult").append(`<tr><td>add list="`+$('#search_search').val()+`" address=`+ip+`</td></tr>`);
+                $("#tblresult").append(`<tr><td>add list="`+list+`" address=`+ip+`</td></tr>`);
             }
 
         });
